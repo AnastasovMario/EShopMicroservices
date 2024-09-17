@@ -10,6 +10,7 @@
         {
             //Define http post endpoint with Carter and Mapster
 
+            //This endpoints expects CreateProductRequest as a body which is defined above
             app.MapPost("/products",
                 async (CreateProductRequest request, ISender sender) =>
             {
