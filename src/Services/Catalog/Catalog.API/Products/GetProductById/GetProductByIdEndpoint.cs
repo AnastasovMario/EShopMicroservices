@@ -23,7 +23,7 @@ namespace Catalog.API.Products.GetProductById
                 return Results.Ok(response);
             })
             .WithName("GetProductById")
-            .Produces<GetProductsResponse>(StatusCodes.Status201Created)
+            .Produces<GetProductByIdResponse>(StatusCodes.Status201Created)
             .ProducesProblem(StatusCodes.Status400BadRequest)
             .WithSummary("Get Product By Id")
             .WithDescription("Get Product By Id");
