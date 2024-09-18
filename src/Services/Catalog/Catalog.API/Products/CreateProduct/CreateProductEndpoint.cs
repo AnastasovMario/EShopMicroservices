@@ -16,13 +16,13 @@
             {
                 //We are converting from request to command object
                 //Our mediator is requiring command object in order to trigger our command handler
-                var command = request.Adapt<CreateProductCommand>(); // map to command object
+                CreateProductCommand command = request.Adapt<CreateProductCommand>(); // map to command object
 
                 //Send it using a mediator
-                var result = await sender.Send(command); //Trigger the handler class
+                CreateProductResult result = await sender.Send(command); //Trigger the handler class
 
                 //Create a product response
-                var response = result.Adapt<CreateProductResponse>();
+                CreateProductResponse response = result.Adapt<CreateProductResponse>();
 
                 return Results.Created($"/products/{response.Id}", response);
             })
