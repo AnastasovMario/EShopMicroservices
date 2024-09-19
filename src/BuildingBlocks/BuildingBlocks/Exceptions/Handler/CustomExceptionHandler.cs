@@ -12,7 +12,7 @@ namespace BuildingBlocks.Exceptions.Handler
         public async ValueTask<bool> TryHandleAsync(HttpContext context, Exception exception, CancellationToken cancellationToken)
         {
             logger.LogError(
-                "Error Message: {exceptionMessage}, Time of occurence{time}",
+                "Error Message: {exceptionMessage}, Time of occurence {time}",
                 exception.Message, DateTime.UtcNow);
 
             (string Detail, string Tittle, int StatusCode) details = exception switch
