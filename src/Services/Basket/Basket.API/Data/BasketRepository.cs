@@ -7,7 +7,7 @@
         {
             var basket = await session.LoadAsync<ShoppingCart>(userName, cancellationToken);
 
-            return basket is null ? throw BasketNotFoundException(userName) : basket;
+            return basket is null ? throw new BasketNotFoundException(userName) : basket;
         }
 
         public async Task<ShoppingCart> StoreBasket(ShoppingCart basket, CancellationToken cancellationToken = default)
