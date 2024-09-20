@@ -1,3 +1,5 @@
+using BuildingBlocks.Exceptions.Handler;
+
 var builder = WebApplication.CreateBuilder(args);
 
 //Add services to the container
@@ -16,11 +18,14 @@ builder.Services.AddMarten(opts =>
   opts.Connection(builder.Configuration.GetConnectionString("Database")!);
   opts.Schema.For<ShoppingCart>().Identity(x => x.UserName); // setting the identity to be username;
 }).UseLightweightSessions(); // For better performance;
-builder.Services.AddScoped<IBasketRepository, BasketRepository>(); ;
+
+builder.Services.AddScoped<IBasketRepository, BasketRepository>();
+builder.Services.AddExceptionHandler<CustomExceptionHandler>();
 
 var app = builder.Build();
 
 //Configure the HTTP request pipeline
 app.MapCarter(); //2. Then map it
+app.UseExceptionHandler(options => { });
 
 app.Run();
