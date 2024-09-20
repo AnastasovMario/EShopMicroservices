@@ -16,6 +16,7 @@ builder.Services.AddMarten(opts =>
   opts.Connection(builder.Configuration.GetConnectionString("Databaes")!);
   opts.Schema.For<ShoppingCart>().Identity(x => x.UserName); // setting the identity to be username;
 }).UseLightweightSessions(); // For better performance;
+builder.Services.AddScoped<IBasketRepository, BasketRepository>(); ;
 
 var app = builder.Build();
 
