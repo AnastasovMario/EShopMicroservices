@@ -11,7 +11,7 @@
         {
             //TODO: Get basket from database
 
-            return new GetBasketResult(new ShoppingCart("abc"));
+            return new GetBasketResult(new ShoppingCart("swn"));
         }
     }
 }
