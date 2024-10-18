@@ -29,7 +29,6 @@ namespace Discount.Grpc.Services
 
       var couponModel = coupon.Adapt<CouponModel>();
       return couponModel;
-
     }
 
     public override async Task<CouponModel> CreateDiscount(CreateDiscountRequest request, ServerCallContext context)
