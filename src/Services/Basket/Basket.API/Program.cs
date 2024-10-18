@@ -30,7 +30,7 @@ builder.Services.Decorate<IBasketRepository, CachedBasketRepository>();
 
 builder.Services.AddStackExchangeRedisCache(opt =>
 {
-    opt.Configuration = builder.Configuration.GetConnectionString("Redis");
+  opt.Configuration = builder.Configuration.GetConnectionString("Redis");
 });
 
 //Grpc Services
@@ -38,6 +38,17 @@ builder.Services.AddStackExchangeRedisCache(opt =>
 builder.Services.AddGrpcClient<DiscountProtoService.DiscountProtoServiceClient>(options =>
 {
   options.Address = new Uri(builder.Configuration["GrpcSettings:DiscountUrl"]!);
+})
+.ConfigurePrimaryHttpMessageHandler(() =>
+{
+  //This fixes a 500 error message which is received when docker-compose is ran with Basket.API and Discount.Grpc
+  //This error happends due to ASP.NET core HTTPs development certificate not being truested by the client (Basket.API)
+  var handler = new HttpClientHandler
+  {
+    ServerCertificateCustomValidationCallback = HttpClientHandler.DangerousAcceptAnyServerCertificateValidator
+  };
+
+  return handler;
 });
 
 //Cross-Cutting Services
@@ -53,11 +64,11 @@ var app = builder.Build();
 //Configure the HTTP request pipeline
 app.MapCarter(); //2. Then map it
 app.UseExceptionHandler(options => { });
-app.UseHealthChecks("/health", 
+app.UseHealthChecks("/health",
      new HealthCheckOptions
      {
-         //Makes the response more readable (UIResponse library)
-         ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
+       //Makes the response more readable (UIResponse library)
+       ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
      });
 
 app.Run();
