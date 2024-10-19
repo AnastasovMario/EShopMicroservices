@@ -1,4 +1,6 @@
-﻿namespace Ordering.Domain.Models
+﻿using Ordering.Domain.Abstractions;
+
+namespace Ordering.Domain.Models
 {
   public class OrderItem : Entity<OrderItemId>
   {
