@@ -1,4 +1,3 @@
-using Microsoft.Extensions.DependencyInjection.Extensions;
 using Ordering.API;
 using Ordering.Application;
 using Ordering.Infrastructure;
