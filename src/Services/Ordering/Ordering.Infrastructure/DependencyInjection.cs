@@ -8,7 +8,11 @@ namespace Ordering.Infrastructure
     public static IServiceCollection AddInfrastructureServices
       (this IServiceCollection services, IConfiguration configuration)
     {
-      var connectionString = configuration.GetConnectionString("Database"); 
+      var connectionString = configuration.GetConnectionString("Database");
+
+      //Add Services
+      services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(connectionString));
+
       return services;
     }
   }
