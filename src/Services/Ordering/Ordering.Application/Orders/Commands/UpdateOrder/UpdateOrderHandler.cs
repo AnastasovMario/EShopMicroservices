@@ -24,8 +24,6 @@ namespace Ordering.Application.Orders.Commands.UpdateOrder
 
       //return the result class after handling it.
       return new UpdateOrderResult(true);
-
-      throw new NotImplementedException();
     }
 
     public void UpdateOrderWithNewValues(Order order, OrderDto orderDto)
