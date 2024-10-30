@@ -1,16 +1,18 @@
 ﻿using BuildingBlocks.Exceptions.Handler;
-using Carter;
+using HealthChecks.UI.Client;
+using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 
 namespace Ordering.API
 {
   public static class DependencyInjection
   {
-    public static IServiceCollection AddApiServices(this IServiceCollection services)
+    public static IServiceCollection AddApiServices(this IServiceCollection services, IConfiguration configuration)
     {
       services.AddCarter();
 
-      //1.
-      services.AddExceptionHandler<CustomExceptionHandler>();
+      services.AddExceptionHandler<CustomExceptionHandler>(); //1
+      services.AddHealthChecks()
+        .AddSqlServer(configuration.GetConnectionString("Database")!);
 
       return services;
     }
@@ -19,9 +21,13 @@ namespace Ordering.API
     {
       app.MapCarter();
       
-      //2
       //By adding these 2 lines of code, we are activating custom exception handling for the ordering
-      app.UseExceptionHandler(options => { });
+      app.UseExceptionHandler(options => { }); //2
+      app.UseHealthChecks("/health",
+        new HealthCheckOptions
+        {
+          ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
+        });
 
       return app;
     }
