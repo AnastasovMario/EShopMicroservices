@@ -115,7 +115,7 @@ services:
       - MessageBroker__Password=guest
       - FeatureManagement__OrderFullfilment=false
     depends_on:
-      - orderb
+      - orderdb
       - messagebroker
     ports:
       - "6003:8080"
